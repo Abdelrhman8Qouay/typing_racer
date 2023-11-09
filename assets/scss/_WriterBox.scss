@@ -1,0 +1,29 @@
+
+
+/* Writer Box Start */
+.writerBox {
+    width: 100%;
+    height: max-content;
+    user-select: none;
+    position: relative;
+    background: #ffffffbd;
+    padding: 1rem;
+    border-radius: 5px;
+}
+.writerBox .back {
+    color: rgba(48, 48, 48, 0.67);
+}
+.writerBox .front-user {
+    font-weight: 600;
+    font-size: 25px;
+    color: black;
+    padding: 0.5rem 1rem;
+    margin-top: 2rem;
+    display: block;
+    width: 100%;
+    height: max-content;
+}
+.writerBox .front-user.error {
+    background-color: rgba(165, 42, 42, 0.572);
+}
+/* Writer Box End */
