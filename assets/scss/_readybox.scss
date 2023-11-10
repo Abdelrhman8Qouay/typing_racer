@@ -1,0 +1,19 @@
+
+.ready_box {
+    @include wh-full;
+    @include flex-center;
+
+    &.hide {
+        display: none;
+    }
+
+    #btnStart {
+        @include rounded-full;
+        @include clear-btn;
+        background: var(--main);
+        padding: 10px;
+        @include wh-custom(70px, 70px);
+        @include font-custom(22px, 500,initial, italic);
+    }
+}
+

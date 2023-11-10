@@ -1,0 +1,89 @@
+
+.cell {
+
+    @include center-margin;
+    margin-top: 4rem;
+    max-width: 800px;
+    position: relative;
+    z-index: 10;
+
+    .keyboard--hasSettings {
+        padding-top: 20px;
+    }
+
+    .keyboard--hands {
+        margin-bottom: 33%;
+    }
+
+    .keyboard--full {
+        border-radius: 20px;
+        padding: 15px 15px 10px;
+    }
+
+    .keyboard--a, .keyboard--detail {
+        background-color: #d9dadb;
+        border: 1px solid rgba(0,0,0,.07);
+    }
+
+    .keyboard {
+        box-sizing: border-box;
+        position: relative;
+        z-index: 1;
+    }
+
+    .keyboard-row {
+        display: flex;
+        flex: 1;
+        justify-content: space-between;
+        margin-bottom: 5px;
+        max-height: 50px;
+
+        .key {
+            line-height: 1;
+            max-height: 40px;
+        }
+
+        .keyboard-key {
+            flex: 1;
+            flex-basis: 40px;
+            margin-right: 5px;
+        }
+
+        .key--duo {
+            flex-direction: column;
+            font-size: 12px;
+        }
+
+        .key--a, .key--b {
+            background-color: #fff;
+            color: #4a4a4a;
+        }
+
+        .key--a {
+            border-bottom: 1px solid #a9a9a9;
+            border-top: 1px solid #fff;
+        }
+
+        .key {
+            border-radius: 5px;
+            box-sizing: border-box;
+            position: relative;
+            text-transform: uppercase;
+            padding: 5px;
+            &.is-active {
+                background-color: #3295db;
+                border-color: #47a0df #3295db #2d86c5;
+                color: #fff;
+            }
+        }
+
+        .hands {
+            position: absolute;
+            height: 100%;
+            left: 0;
+            top: 3%;
+            width: 100%;
+        }
+    }
+
+}

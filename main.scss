@@ -2,7 +2,10 @@
 // all basics
 @import './assets/scss/mixins';
 // style components
+@import './assets/scss/readybox';
 @import './assets/scss/WriterBox';
+@import './assets/scss/keyboard';
+@import './assets/scss/leaves';
 
 
 // ============== Rest Main ==============
@@ -34,8 +37,7 @@
 
 .container {
     max-width: 980px;
-    margin-left: auto;
-    margin-right: auto;
+    @include center-margin;
 }
 
 .tit {
