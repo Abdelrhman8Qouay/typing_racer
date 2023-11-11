@@ -1,4 +1,7 @@
 
+// .changerContainer {
+
+// }
 
 /* Writer Box Start */
 .writerBox {
@@ -6,7 +9,7 @@
     @include wh-custom(100%, max-content);
     @include rounded;
     user-select: none;
-    background: #ffffffbd;
+    background: rgb(132 132 132 / 74%);
     padding: 1rem;
     z-index: 20;
 
@@ -20,15 +23,40 @@
             &.error {
                 background: rgba(255, 0, 0, 0.57);
                 color: rgba(190, 0, 0, 0.85);
+                @include rounded;
             }
             &.done {
                 background: rgb(64 255 0 / 57%);
                 color: rgb(51 172 10 / 85%);
+                @include rounded;
             }
             &.letter-active {
-                background: rgba(0, 179, 255, 0.57);
-                color: rgba(9, 150, 210, 0.85);
+                color: rgba(25, 177, 243, 0.9);
+                position: relative;
+                &::before {
+                    content: '';
+                    @include wh-custom(112%, 2px);
+                    background: rgba(25, 177, 243, 0.9);
+                    position: absolute;
+                    left: -12%;
+                    top: 99%;
+                    animation: hideShow 1.5s ease-out infinite;
+                }
             }
+        }
+    }
+    @keyframes hideShow {
+        0% {
+            opacity: 0;
+        }
+        40% {
+            opacity: 1;
+        }
+        60% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
         }
     }
 

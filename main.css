@@ -32,7 +32,7 @@
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
-  background: rgba(255, 255, 255, 0.7411764706);
+  background: rgba(132, 132, 132, 0.74);
   padding: 1rem;
   z-index: 20;
 }
@@ -50,14 +50,40 @@
 .writerBox .back .letter.error {
   background: rgba(255, 0, 0, 0.57);
   color: rgba(190, 0, 0, 0.85);
+  border-radius: 4px;
 }
 .writerBox .back .letter.done {
   background: rgba(64, 255, 0, 0.57);
   color: rgba(51, 172, 10, 0.85);
+  border-radius: 4px;
 }
 .writerBox .back .letter.letter-active {
-  background: rgba(0, 179, 255, 0.57);
-  color: rgba(9, 150, 210, 0.85);
+  color: rgba(25, 177, 243, 0.9);
+  position: relative;
+}
+.writerBox .back .letter.letter-active::before {
+  content: "";
+  width: 112%;
+  height: 2px;
+  background: rgba(25, 177, 243, 0.9);
+  position: absolute;
+  left: -12%;
+  top: 99%;
+  animation: hideShow 1.5s ease-out infinite;
+}
+@keyframes hideShow {
+  0% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 .writerBox .front-user {
   display: block;
@@ -422,9 +448,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  overflow: auto;
 }
 
 .container {
