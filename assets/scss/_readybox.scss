@@ -1,19 +1,66 @@
-
-.ready_box {
+.container.content {
     @include wh-full;
-    @include flex-center;
+}
 
-    &.hide {
-        display: none;
+.changerContainer {
+    @include wh-full;
+    @include background_custom(none, cover, center);
+    background: #fff;
+
+    opacity: 1;
+    visibility: visible;
+    transition: all 0.3s;
+
+    &.animate {
+        opacity: 0;
+        visibility: hidden;
     }
 
-    #btnStart {
-        @include rounded-full;
-        @include clear-btn;
-        background: var(--main);
-        padding: 10px;
-        @include wh-custom(70px, 70px);
-        @include font-custom(22px, 500,initial, italic);
+    .ready_box {
+        @include wh-full;
+        @include flex-center;
+        flex-direction: column;
+
+        &.hide {
+            display: none;
+        }
+
+        #btnStart {
+            @include rounded-full;
+            @include clear-btn;
+            background: var(--main);
+            padding: 10px;
+            @include wh-custom(70px, 70px);
+            @include font-custom(22px, 500,initial, italic);
+        }
+
+        .res {
+            margin-top: 2.5rem;
+            @include wh-custom(100%, max-content);
+            @include rounded-lg;
+            padding: 15px;
+            background-color: crimson;
+            color: #fff;
+            display: flex;
+                justify-content: space-between;
+
+            .box {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+
+                h2 {
+                    color: #fff;
+                    @include font-custom(27px, 500, italic);
+                }
+                span {
+                    color: #fff;
+                    @include font-custom(20px, 600);
+                }
+            }
+        }
     }
 }
+
 

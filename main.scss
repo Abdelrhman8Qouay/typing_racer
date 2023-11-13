@@ -31,7 +31,6 @@
 
 .app {
     @include wh-screen;
-    @include background_custom(url(./assets/background.jpg), cover, center);
     overflow: auto;
 }
 
@@ -43,5 +42,11 @@
 .tit {
     font-size: 35px;
     font-weight: 500;
-    color: rgb(116, 226, 43);
+    color: var(--color1);
+    text-align: center;
+}
+
+
+.hide {
+    display: none;
 }

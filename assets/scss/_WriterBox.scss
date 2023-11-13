@@ -9,25 +9,25 @@
     @include wh-custom(100%, max-content);
     @include rounded;
     user-select: none;
-    background: rgb(132 132 132 / 74%);
+    background: rgb(30 30 30);
     padding: 1rem;
     z-index: 20;
 
     .back {
         white-space: 5px;
         .letter {
-            color: rgba(48, 48, 48, 0.75);
+            color: rgb(104 104 104 / 95%);
             font-size: 25px;
             @include margin-custom-lr(1px, 1px);
             @include padding-custom-lr(1px, 1px);
             &.error {
                 background: rgba(255, 0, 0, 0.57);
-                color: rgba(190, 0, 0, 0.85);
+                color: rgba(108, 0, 0, 0.95);
                 @include rounded;
             }
             &.done {
                 background: rgb(64 255 0 / 57%);
-                color: rgb(51 172 10 / 85%);
+                color: rgba(18, 71, 0, 0.95);
                 @include rounded;
             }
             &.letter-active {
@@ -71,6 +71,13 @@
         &.error {
             background-color: rgba(251, 26, 26, 0.65);
         }
+    }
+
+    .game_time {
+        text-align: end;
+        font-size: 16px;
+        font-weight: 400;
+        color: #fff;
     }
 }
 /* Writer Box End */
