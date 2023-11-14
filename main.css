@@ -34,7 +34,8 @@
   border-radius: 50%;
   border: none;
   outline: none;
-  background: var(--main);
+  background: crimson;
+  color: #fff;
   padding: 10px;
   width: 70px;
   height: 70px;
@@ -42,6 +43,12 @@
   font-weight: 500;
   font-family: initial;
   font-style: italic;
+}
+.changerContainer .ready_box .titReady {
+  font-size: 3rem;
+  font-weight: 700;
+  color: crimson;
+  text-align: center;
 }
 .changerContainer .ready_box .res {
   margin-top: 2.5rem;
@@ -100,6 +107,7 @@
   margin-left: 1px;
   padding-right: 1px;
   padding-left: 1px;
+  position: relative;
 }
 .writerBox .back .letter.error {
   background: rgba(255, 0, 0, 0.57);
@@ -108,12 +116,11 @@
 }
 .writerBox .back .letter.done {
   background: rgba(64, 255, 0, 0.57);
-  color: rgba(18, 71, 0, 0.95);
+  color: rgba(15, 58, 0, 0.95);
   border-radius: 4px;
 }
 .writerBox .back .letter.letter-active {
   color: rgba(25, 177, 243, 0.9);
-  position: relative;
 }
 .writerBox .back .letter.letter-active::before {
   content: "";
@@ -124,6 +131,30 @@
   left: -12%;
   top: 99%;
   animation: hideShow 1.5s ease-out infinite;
+}
+.writerBox .back .letter.start_char::after {
+  content: "Start here";
+  position: absolute;
+  left: -50%;
+  bottom: 100%;
+  background: dimgrey;
+  color: #fff;
+  padding: 7px;
+  width: -moz-max-content;
+  width: max-content;
+  height: -moz-max-content;
+  height: max-content;
+  border-radius: 10px;
+  font-family: sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: initial;
+  font-style: initial;
+  opacity: 1;
+  transition: all 0.3s;
+}
+.writerBox .back .letter::after {
+  opacity: 0;
 }
 @keyframes hideShow {
   0% {

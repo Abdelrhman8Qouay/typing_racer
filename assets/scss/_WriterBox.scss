@@ -20,6 +20,7 @@
             font-size: 25px;
             @include margin-custom-lr(1px, 1px);
             @include padding-custom-lr(1px, 1px);
+            position: relative;
             &.error {
                 background: rgba(255, 0, 0, 0.57);
                 color: rgba(108, 0, 0, 0.95);
@@ -27,12 +28,11 @@
             }
             &.done {
                 background: rgb(64 255 0 / 57%);
-                color: rgba(18, 71, 0, 0.95);
+                color: rgba(15, 58, 0, 0.95);
                 @include rounded;
             }
             &.letter-active {
                 color: rgba(25, 177, 243, 0.9);
-                position: relative;
                 &::before {
                     content: '';
                     @include wh-custom(112%, 2px);
@@ -42,6 +42,28 @@
                     top: 99%;
                     animation: hideShow 1.5s ease-out infinite;
                 }
+            }
+
+            &.start_char {
+                &::after {
+                    content: 'Start here';
+                    position: absolute;
+                    left: -50%;
+                    bottom: 100%;
+                    background: dimgrey;
+                    color: #fff;
+                    padding: 7px;
+                    @include wh-custom(max-content, max-content);
+                    @include rounded-lg;
+                    font-family: sans-serif;
+                    @include font-custom(14px, 400);
+
+                    opacity: 1;
+                    transition: all 0.3s;
+                }
+            }
+            &::after {
+                opacity: 0;
             }
         }
     }

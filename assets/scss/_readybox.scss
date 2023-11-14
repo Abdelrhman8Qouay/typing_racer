@@ -28,10 +28,18 @@
         #btnStart {
             @include rounded-full;
             @include clear-btn;
-            background: var(--main);
+            background: crimson;
+            color: #fff;
             padding: 10px;
             @include wh-custom(70px, 70px);
             @include font-custom(22px, 500,initial, italic);
+        }
+
+        .titReady {
+            font-size: 3rem;
+            font-weight: 700;
+            color: crimson;
+            text-align: center;
         }
 
         .res {
