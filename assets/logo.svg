@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <!-- Transparent Background -->
+  <rect width="100%" height="100%" fill="none"/>
+
+  <!-- Keyboard Shape -->
+  <rect x="100" y="100" width="400" height="120" fill="#4CAF50" rx="10" ry="10"/>
+  <rect x="120" y="120" width="360" height="80" fill="#333" rx="5" ry="5"/>
+  
+  <!-- Wind-like Element -->
+  <path d="M 500 250 Q 550 225, 500 200 Q 450 175, 500 150 Q 550 125, 500 100" fill="#4CAF50" stroke="#4CAF50" stroke-width="5" />
+  <path d="M 500 100 Q 520 95, 540 100 Q 520 105, 500 100" fill="#4CAF50" />
+  
+  <!-- Text "Racer" -->
+  <text x="180" y="250" font-family="Arial, sans-serif" font-size="80" fill="#333" font-weight="bold">
+    Racer
+  </text>
+
+  <!-- Keyboard Keys -->
+  <rect x="160" y="140" width="30" height="30" fill="#333" />
+  <rect x="210" y="140" width="30" height="30" fill="#333" />
+  <rect x="260" y="140" width="30" height="30" fill="#333" />
+  <rect x="310" y="140" width="30" height="30" fill="#333" />
+  <rect x="360" y="140" width="30" height="30" fill="#333" />
+
+  <!-- Key Symbols -->
+  <text x="165" y="165" font-family="Arial, sans-serif" font-size="20" fill="#ffffff">A</text>
+  <text x="215" y="165" font-family="Arial, sans-serif" font-size="20" fill="#ffffff">S</text>
+  <text x="265" y="165" font-family="Arial, sans-serif" font-size="20" fill="#ffffff">D</text>
+  <text x="315" y="165" font-family="Arial, sans-serif" font-size="20" fill="#ffffff">F</text>
+  <text x="365" y="165" font-family="Arial, sans-serif" font-size="20" fill="#ffffff">G</text>
+</svg>

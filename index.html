@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="main.css">
-    <script src="./play.js" type="module" defer></script>
     <title>Writer Game</title>
 </head>
 
@@ -14,28 +13,60 @@
 
         <!-- Background Sound Effect -->
         <!-- <embed loop src="./assets/sound/autumn-morning-woodland.mp3" hidden type="audio/mp3"></embed>-->
+        <!-- <nav class="navbar">
+            <div class="logo">
+                <img src="./assets/logo.svg" width="100" height="100" alt="logo racer">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Algorithms</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav> -->
 
         <div class="changerContainer">
             <div class="container content">
 
+                <!-- Ready Page  -->
                 <div class="ready_box">
-                    <h2 class="titReady"><< Type Racer Game >></h2>
+                    <h2 class="titReady">Type Racer Game</h2>
                     <button type="button" id="btnStart">Begin</button>
-                    <div class="res">
+                    <div class="containInfo">
                         <div class="box">
-                            <h2>words</h2>
+                            <h2>wpm</h2>
                             <span id="words_num">0</span>
                         </div>
                         <div class="box">
-                            <h2>chars</h2>
-                            <span id="chars_num">0</span>
+                            <h2>acc</h2>
+                            <span id="words_num">0%</span>
                         </div>
-                        <div class="box">
-                            <h2>done</h2>
-                            <span id="time_game_done">00</span>
+                        <div class="res">
+                            <div class="box">
+                                <h2>words</h2>
+                                <span id="words_num">0</span>
+                            </div>
+                            <div class="box">
+                                <h2>chars</h2>
+                                <span id="chars_num">0</span>
+                            </div>
+                            <div class="box">
+                                <h2>time</h2>
+                                <span id="time_game_done">0</span>
+                            </div>
+    
+                            <div class="box">
+                                <h2>done</h2>
+                                <span id="time_game_done">0</span>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- <img src="./assets/logo.svg" width="100" height="100" alt="logo racer"> -->
+
+
+                <!-- Game Page  -->
                 <div class="game_box hide">
                     <audio loop src="./assets/sound/earlyambirdslonecricketapril2012-23289.mp3" id="bgAudio" preload="none" style="visibility: hidden;opacity: 0;">
                     </audio>
@@ -659,6 +690,14 @@
         </div>
 
     </div>
+
+
+    <!-- functions Loaded -->
+    <script src="./functions.js"></script>
+    <!-- classes Loaded -->
+    <script src="./classes.js"></script>
+    <!-- Main Loaded -->
+    <script src="./main.js"></script>
 </body>
 
 </html>

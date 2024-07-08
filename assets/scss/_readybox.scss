@@ -1,66 +1,74 @@
-.container.content {
+
+.ready_box {
     @include wh-full;
-}
+    @include flex-center;
+    flex-direction: column;
 
-.changerContainer {
-    @include wh-full;
-    @include background_custom(none, cover, center);
-    background: #fff;
-
-    opacity: 1;
-    visibility: visible;
-    transition: all 0.3s;
-
-    &.animate {
-        opacity: 0;
-        visibility: hidden;
+    &.hide {
+        display: none;
     }
 
-    .ready_box {
-        @include wh-full;
-        @include flex-center;
+    #btnStart {
+        @include clear-btn;
+        border-radius: 4px;
+        background: var(--secondary);
+        color: var(--background);
+        padding: 10px 20px;
+        cursor: pointer;
+        @include font-custom(22px, 500, initial, italic);
+        transition: opacity 0.25s;
+        &:hover {
+            opacity: 0.75;
+        }
+    }
+
+    .titReady {
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--secondary);
+        text-align: center;
+    }
+
+    .containInfo {
+        display: flex;
         flex-direction: column;
-
-        &.hide {
-            display: none;
+        gap: 10px;
+        .box {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+    
+            h2 {
+                color: var(--secondary);
+                @include font-custom(27px, 500, italic);
+            }
+            span {
+                color: var(--secondary);
+                @include font-custom(20px, 600);
+            }
         }
-
-        #btnStart {
-            @include rounded-full;
-            @include clear-btn;
-            background: crimson;
-            color: #fff;
-            padding: 10px;
-            @include wh-custom(70px, 70px);
-            @include font-custom(22px, 500,initial, italic);
-        }
-
-        .titReady {
-            font-size: 3rem;
-            font-weight: 700;
-            color: crimson;
-            text-align: center;
-        }
-
+    
         .res {
             margin-top: 2.5rem;
             @include wh-custom(100%, max-content);
             @include rounded-lg;
             padding: 15px;
-            background-color: crimson;
+            background-color: var(--secondary);
             color: #fff;
             display: flex;
-                justify-content: space-between;
-
+            justify-content: space-between;
+            gap: 2rem;
+    
             .box {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
                 align-items: center;
-
+    
                 h2 {
                     color: #fff;
-                    @include font-custom(27px, 500, italic);
+                    @include font-custom(27px, 500);
                 }
                 span {
                     color: #fff;
@@ -72,3 +80,57 @@
 }
 
 
+// .ready_box {
+//     background-color: var(--main);
+//     border-radius: 8px;
+//     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+//     padding: 20px;
+//     text-align: center;
+//     max-width: 400px;
+//     width: 100%;
+
+//     .titReady {
+//         color: var(--secondary);
+//         font-size: 2em;
+//         margin-bottom: 20px;
+//     }
+
+//     #btnStart {
+//         background-color: var(--background);
+//         color: var(--secondary);
+//         border: none;
+//         padding: 10px 20px;
+//         font-size: 1.2em;
+//         border-radius: 8px;
+//         cursor: pointer;
+//         transition: background-color 0.3s;
+//         &:hover {
+//             background-color: aquamarine;
+//         }
+//     }
+
+//     .res {
+//         margin-top: 20px;
+//         display: flex;
+//         justify-content: space-around;
+//         gap: 10px;
+
+//         .box {
+//             background-color: var(--background);
+//             border-radius: 8px;
+//             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+//             padding: 10px;
+//             width: 100px;
+//             text-align: center;
+//             h2 {
+//                 color: var(--secondary);
+//                 margin-bottom: 10px;
+//             }
+
+//             span {
+//                 color: var(--secondary);
+//                 font-size: 1.5em;
+//             }
+//         }
+//     }
+// }

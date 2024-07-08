@@ -1,0 +1,121 @@
+To calculate the average typing speed from a typing test, you typically measure it in words per minute (WPM) or characters per minute (CPM). Here's a step-by-step process for each method:
+
+### Words Per Minute (WPM)
+
+1. **Record Total Time**: Note the total time taken for the typing test in minutes. If you have the time in seconds, divide it by 60 to convert it to minutes.
+
+2. **Count Words Typed**: Count the total number of words typed during the test. A standard word in typing tests is usually considered to be 5 characters long, including spaces and punctuation.
+
+3. **Calculate WPM**:
+   \[
+   \text{WPM} = \frac{\text{Number of Words Typed}}{\text{Time in Minutes}}
+   \]
+
+   Example: If you typed 300 words in 5 minutes, the average speed would be:
+   \[
+   \text{WPM} = \frac{300}{5} = 60
+   \]
+
+### Characters Per Minute (CPM)
+
+1. **Record Total Time**: Note the total time taken for the typing test in minutes.
+
+2. **Count Characters Typed**: Count the total number of characters typed, including spaces and punctuation.
+
+3. **Calculate CPM**:
+   \[
+   \text{CPM} = \frac{\text{Number of Characters Typed}}{\text{Time in Minutes}}
+   \]
+
+   Example: If you typed 1500 characters in 5 minutes, the average speed would be:
+   \[
+   \text{CPM} = \frac{1500}{5} = 300
+   \]
+
+### Detailed Steps
+
+1. **Start the Test**: Begin with a specific text or use an online typing test tool.
+
+2. **Typing Session**: Type the text as accurately as possible. Most tests will automatically measure the time taken.
+
+3. **Completion**: Note the total time taken and the number of words or characters typed.
+
+4. **Calculate**: Use the formulas above to determine your average typing speed.
+
+### Example Calculation
+
+Suppose you took a typing test that lasted for 3 minutes and you typed 210 words. To find your average WPM:
+
+1. **Total Time**: 3 minutes
+2. **Number of Words Typed**: 210 words
+3. **WPM Calculation**:
+   \[
+   \text{WPM} = \frac{210}{3} = 70
+   \]
+
+### Online Tools
+
+Many online tools can calculate your typing speed automatically:
+
+- [TypingTest.com](https://www.typingtest.com)
+- [10FastFingers](https://10fastfingers.com/typing-test/english)
+- [Keybr](https://www.keybr.com/)
+
+These tools often provide a breakdown of your speed and accuracy.
+
+Would you like more detailed examples or additional resources on this topic?
+
+
+
+----------------------------------------------------------------------------------
+To calculate your average typing speed in words per minute (WPM), you need to follow these steps:
+
+### Steps to Calculate WPM
+
+1. **Determine the Total Time in Minutes**:
+   - You took 84 seconds.
+   - Convert this to minutes by dividing by 60.
+     \[
+     \text{Time in minutes} = \frac{84}{60} = 1.4 \text{ minutes}
+     \]
+
+2. **Count the Number of Words Typed**:
+   - You typed 25 words.
+
+3. **Calculate the Words Per Minute**:
+   \[
+   \text{WPM} = \frac{\text{Number of Words Typed}}{\text{Time in Minutes}}
+   \]
+   Plugging in the values:
+   \[
+   \text{WPM} = \frac{25}{1.4} \approx 17.86 \text{ words per minute}
+   \]
+
+When rounded to the nearest whole number, this is approximately 18 WPM.
+
+### Why 18 WPM?
+
+- The typing speed is calculated by dividing the number of words typed by the time taken in minutes.
+- Here, you typed 25 words in 1.4 minutes, leading to an average speed of about 17.86 words per minute, which rounds up to 18 WPM.
+
+### Detailed Calculation
+
+1. **Convert Seconds to Minutes**:
+   \[
+   \frac{84}{60} = 1.4 \text{ minutes}
+   \]
+
+2. **Calculate WPM**:
+   \[
+   \frac{25}{1.4} = 17.8571 \approx 18 \text{ WPM}
+   \]
+
+So, your average typing speed is 18 words per minute when you round to the nearest whole number.
+
+### Calculation Breakdown
+
+- **Time Conversion**: 84 seconds is 1.4 minutes.
+- **Division**: 25 words divided by 1.4 minutes results in approximately 17.86 WPM.
+- **Rounding**: Rounding this value to the nearest whole number gives 18 WPM.
+
+Would you like to understand how to improve your typing speed or need any further clarification on the calculations?
