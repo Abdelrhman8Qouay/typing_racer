@@ -6,7 +6,7 @@ const app = document.querySelector('.app'),
 // changer container {before ready}
 changerContainer = document.querySelector('.changerContainer'),
 time_game_done = document.getElementById('time_game_done'),
-readyBox = document.querySelector('.ready_box'),
+boardBox = document.querySelector('.board_box'),
 btnStart = document.getElementById('btnStart'),
 words_num = document.getElementById('words_num'),
 chars_num = document.getElementById('chars_num'),
@@ -21,7 +21,7 @@ inputUser = document.querySelector('.writerBox .front-user'),
 all_keyboard_keys = document.querySelectorAll('.keyboard .keyboard-row .keyboard-key.key');
 
 let para_letters = [];
-var newGame = {};
+var gameObj = {};
 
 
 
@@ -34,32 +34,31 @@ document.addEventListener('DOMContentLoaded', async ()=>{
         btnStart.onclick = () => {
 
             // Create new Game
-            createGame(paragraphs, 3);
+            createGame(paragraphs, 140);
 
             // Start the game
-            newGame.startGame();
+            gameObj.startGame();
 
             // ============== Game Started ==============
-            // get the letters as variables
-            para_letters = document.querySelectorAll('.writerBox .back .letter');
 
-            console.log(newGame.current_para);
+            console.log(gameObj.current_para);
             // // main options when play {a game racer typing}  >>>> (was here before create the class of game)
 
-            // when click on textBack
-            textBackWriter.addEventListener('click', ()=> focusInput(inputUser));
+            // focus the input when begin & when click on textBack
+            UI.focusInput(inputUser);
+            textBackWriter.addEventListener('click', ()=> UI.focusInput(inputUser));
 
             // check key pressed
-            inputUser.addEventListener('keydown', (e)=> keyActivated(e, newGame))
+            inputUser.addEventListener('keydown', (e)=> gameObj.keyActivated(e))
 
             // the process of type game
-            inputUser.addEventListener('input', (e)=> typing(e, newGame))
+            inputUser.addEventListener('input', (e)=> gameObj.typing(e))
 
         };
 
-    }).catch(error => console.error('Error fetching JSON:', error));
+    }).catch(error => console.error('Error fetching JSON: ', error));
 })
 
 function createGame(paras, game_timeout) {
-    newGame = new Game(paras, game_timeout);
+    gameObj = new Game(paras, game_timeout);
 } 

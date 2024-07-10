@@ -1,4 +1,4 @@
-.ready_box {
+.board_box {
   width: 100%;
   height: 100%;
   display: flex;
@@ -6,10 +6,10 @@
   align-items: center;
   flex-direction: column;
 }
-.ready_box.hide {
+.board_box.hide {
   display: none;
 }
-.ready_box #btnStart {
+.board_box #btnStart {
   border: none;
   outline: none;
   border-radius: 4px;
@@ -23,41 +23,41 @@
   font-style: italic;
   transition: opacity 0.25s;
 }
-.ready_box #btnStart:hover {
+.board_box #btnStart:hover {
   opacity: 0.75;
 }
-.ready_box .titReady {
+.board_box .titReady {
   font-size: 3rem;
   font-weight: 700;
   color: var(--secondary);
   text-align: center;
 }
-.ready_box .containInfo {
+.board_box .containInfo {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-.ready_box .containInfo .box {
+.board_box .containInfo .box {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
 }
-.ready_box .containInfo .box h2 {
+.board_box .containInfo .box h2 {
   color: var(--secondary);
   font-size: 27px;
   font-weight: 500;
   font-family: italic;
   font-style: initial;
 }
-.ready_box .containInfo .box span {
+.board_box .containInfo .box span {
   color: var(--secondary);
   font-size: 20px;
   font-weight: 600;
   font-family: initial;
   font-style: initial;
 }
-.ready_box .containInfo .res {
+.board_box .containInfo .res {
   margin-top: 2.5rem;
   width: 100%;
   height: -moz-max-content;
@@ -70,20 +70,20 @@
   justify-content: space-between;
   gap: 2rem;
 }
-.ready_box .containInfo .res .box {
+.board_box .containInfo .res .box {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
 }
-.ready_box .containInfo .res .box h2 {
+.board_box .containInfo .res .box h2 {
   color: #fff;
   font-size: 27px;
   font-weight: 500;
   font-family: initial;
   font-style: initial;
 }
-.ready_box .containInfo .res .box span {
+.board_box .containInfo .res .box span {
   color: #fff;
   font-size: 20px;
   font-weight: 600;
