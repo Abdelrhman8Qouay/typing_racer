@@ -1,64 +1,69 @@
 
 
 // ======================== all variables ========================
-// main vars
+// main vars (exists always)
 const app = document.querySelector('.app'),
-// changer container {before ready}
 changerContainer = document.querySelector('.changerContainer'),
-time_game_done = document.getElementById('time_game_done'),
+
+// ------- {before ready} -------
+// vars
 boardBox = document.querySelector('.board_box'),
 btnStart = document.getElementById('btnStart'),
-words_num = document.getElementById('words_num'),
-chars_num = document.getElementById('chars_num'),
-// game vars {game begin}
+// Info
+gameTimeEle = document.getElementById('time_game_done'),
+wordsEle = document.getElementById('words_num'),
+charsEle = document.getElementById('chars_num'),
+wpmEle = document.getElementById('wpm'),
+accuracyEle = document.getElementById('accuracy'),
+
+// ------- {game begin} -------
+// vars
 gameBox = document.querySelector('.game_box'),
-writerBox = document.querySelector('.writerBox'),
+writerBox = document.querySelector('.game_box .writerBox'),
 backgroundAudio = document.getElementById('bgAudio'),
-textBackWriter = document.querySelector('.writerBox .back'),
-gameTimeNow = document.querySelector('.writerBox .game_time'),
-inputUser = document.querySelector('.writerBox .front-user'),
-// keyboard vars
+paraContainerEle = document.querySelector('.game_box .writerBox .para_container'),
+typeInput = document.querySelector('.game_box .writerBox #userInput'),
+// Game Info
+gameLiveTime = document.querySelector('.game_box .writerBox .game_time'),
+
+// ------- keyboard vars -------
 all_keyboard_keys = document.querySelectorAll('.keyboard .keyboard-row .keyboard-key.key');
+var para_letters = [];
 
-let para_letters = [];
+
+
 var gameObj = {};
-
-
-
 // ======================== DOM Content Loaded ========================
 document.addEventListener('DOMContentLoaded', async ()=>{
     // ======================== Before Ready ========================
     fetchData('./assets/data/context.json')
     .then(paragraphs => {
         // when click let's begin the game
-        btnStart.onclick = () => {
-
-            // Create new Game
-            createGame(paragraphs, 140);
-
-            // Start the game
-            gameObj.startGame();
-
-            // ============== Game Started ==============
-
-            console.log(gameObj.current_para);
-            // // main options when play {a game racer typing}  >>>> (was here before create the class of game)
-
-            // focus the input when begin & when click on textBack
-            UI.focusInput(inputUser);
-            textBackWriter.addEventListener('click', ()=> UI.focusInput(inputUser));
-
-            // check key pressed
-            inputUser.addEventListener('keydown', (e)=> gameObj.keyActivated(e))
-
-            // the process of type game
-            inputUser.addEventListener('input', (e)=> gameObj.typing(e))
-
-        };
+        btnStart.onclick = () => start(paragraphs, 15);
 
     }).catch(error => console.error('Error fetching JSON: ', error));
 })
 
-function createGame(paras, game_timeout) {
-    gameObj = new Game(paras, game_timeout);
+
+
+function start(paragraphs, game_timeout) {
+    // Create new Game
+    gameObj = new Game(paragraphs, game_timeout);
+
+    // Start the game
+    gameObj.startGame();
+    
+    console.log(gameObj.current_para);
+    // // main options when play {a game racer typing}  >>>> (was here before create the class of game)
+    
+    // ============== Game Started ==============
+    // focus the input when begin & when click on textBack
+    UI.focusInput(typeInput);
+    paraContainerEle.addEventListener('click', ()=> UI.focusInput(typeInput));
+
+    // check key pressed
+    typeInput.addEventListener('keydown', (e)=> gameObj.keyActivated(e))
+
+    // the process of type game
+    typeInput.addEventListener('input', (e)=> gameObj.typing(e))
 } 

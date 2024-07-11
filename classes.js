@@ -2,6 +2,10 @@
 
 class Game {
 
+    // options to control the shape of the game
+    static pass_click = './assets/sound/click.mp3';
+    static err_click = './assets/sound/err_click.wav';
+
     constructor(paragraphs, timeout = 140, ) {
         this.paras = paragraphs;
         this.const_time = timeout;
@@ -22,14 +26,13 @@ class Game {
         this.added_char = true;
 
         // this finally get result
-        this.time_to_minute= 0; // seconds(timeout) / 60
         this.wpm= 0; // words per minute // Math.round( wordsWrote / minutesTimeout )
         this.accuracy= 0;
     }
 
 
     // Functions USED ---------------
-    // set interval to check timeout of game (if end the timeout go endGame)
+    // set interval to check timeout of game (if end the timeout >> endGame)
     checkGameTime() {
         var game_stop = setInterval(()=> {
             this.game_timeout--;
@@ -41,13 +44,26 @@ class Game {
         }, 1000);
     }
 
+    // return the time spent as seconds
+    #calcTimeSpent() {
+        return this.const_time - this.game_timeout; // total seconds of game - at game time done
+    }
+    // return words per minute (wpm)
+    #wpmCalc() {
+        let words = this.para_char_num / 5, // use the standard definition that one word is equal to 5 characters
+        time_to_minute = this.#calcTimeSpent() / 60; // convert seconds to minutes // seconds(timeout) / 60
+
+        this.wpm= Math.round(words / time_to_minute); // words per minute // Math.round( wordsWrote / minutesTimeout )
+        return this.wpm;
+    }
+
     // start the game after create the class
     startGame() {
         // first add the paragraph
         UI.addParagraph(this);
 
         // get the letters as variables
-        para_letters = document.querySelectorAll('.writerBox .back .letter');
+        para_letters = document.querySelectorAll('.game_box .writerBox .para_container .letter');
     
         // put the background of each para
         changerContainer.style.background = `url(${this.current_para.background}) no-repeat`;
@@ -72,15 +88,17 @@ class Game {
     // ending the game anyway
     endGame() {
         // first removeEventListener for the elements (will not work if these elements is not exists in the DOM {so we do if first})
-        textBackWriter.removeEventListener('click', ()=> UI.focusInput(inputUser));
-        inputUser.removeEventListener('keydown', (e)=> this.keyActivated(e));
-        inputUser.removeEventListener('input', (e)=> this.typing(e));
+        paraContainerEle.removeEventListener('click', ()=> UI.focusInput(typeInput));
+        typeInput.removeEventListener('keydown', (e)=> this.keyActivated(e));
+        typeInput.removeEventListener('input', (e)=> this.typing(e));
 
         // put the result of the last game
-        time_game_done.innerText = this.const_time - this.game_timeout; // total seconds of game - at game time done
-        gameTimeNow.innerText = this.game_timeout;
-        words_num.innerText = this.words_done;
-        chars_num.innerText = this.para_char_num;
+        gameTimeEle.innerText = this.#calcTimeSpent();
+        wpmEle.innerText = this.#wpmCalc(); 
+        wordsEle.innerText = this.words_done;
+        charsEle.innerText = this.para_char_num;
+        
+        gameLiveTime.innerText = this.const_time;
 
         // remove gameBox & add boardBox
         UI.showBoard(true);
@@ -102,54 +120,42 @@ class Game {
     keyActivated(e) {
         this.event_key.code = e.code; this.event_key.key = e.key;
     }
-    
-    // this process while typing in the game
-    typing(e) {
-        // audio when click
-        const pressKeyAud = new Audio('./assets/sound/click.mp3');
-    
-        console.log(para_letters[this.para_char_num]);
-        // if this char is first (add start_char) else (remove start_char)
-        this.para_char_num > 0 ? removeClass(para_letters[this.para_char_num], 'start_char') : addClass(para_letters[this.para_char_num], 'start_char');
-    
-        // the default variables when click (then use it)
-        let input_char_index = e.target.value.length;
-        this.added_char = isSpaceChar(e.target.value[input_char_index-1]);
-        
-        // ----------- Process this key -----------
-        if(this.event_key.code == 'Space') { // if pressed space >> 32
-            if(!input_char_index) { // if value empty '' {do nothing
-                if(hasClass(e.target, 'error')) removeClass(e.target, 'error');
+
+    // ------------------ While Typing ------------------
+    spacePressed(e, input_char_index, pressKeyAud) {
+        if(!input_char_index) { // if value empty '' {do nothing
+            if(hasClass(e.target, 'error')) removeClass(e.target, 'error');
+            e.target.value = e.target.value.slice(0, input_char_index - 1); // stop add new char for {input type}
+            console.log('typing method msg: space for empty input')
+        } else { // else
+            if(e.target.value.trim() != this.content[this.words_done]) { // if input(trim >> removed spaces) != content[textIndex] {then make an error
+                Game.clickError(e.target, null, true);
                 e.target.value = e.target.value.slice(0, input_char_index - 1); // stop add new char for {input type}
-                console.log('space for empty input')
-            } else { // else
-                if(e.target.value.trim() != this.content[this.words_done]) { // if input(trim >> removed spaces) != content[textIndex] {then make an error
-                    Game.clickError(e.target, null, true);
-                    e.target.value = e.target.value.slice(0, input_char_index - 1); // stop add new char for {input type}
-                    // if(para_letters[this.para_char_num]) { // if exists {check last char}
-                    //     if(hasClass(para_letters[this.para_char_num], 'error')) { // if char last is error then {delete the new space}
-                    //         e.target.value = e.target.value.slice(0, input_char_index - 1); // stop add new char for {input type}
-                    //     } else { // else {add the error class then go next}
-                    //         letterActive(this.para_char_num, 'error', this);
-                    //     }
-                    // }
-                } else { // else {the space key is true then continue
-                    this.words_done++; // add words done
-                    removeClass(para_letters[this.para_char_num], 'letter-active'); // remove active for space char
-                    this.para_char_num++; // from space char to first char in new word
-                    addClass(para_letters[this.para_char_num], 'letter-active'); // add active for new char
-                    Game.activeKeyboardKey(this.para_char_num, this); // add active for new char on keyboard
-                    e.target.value = '';
-                    this.char_num = input_char_index; // make char_num length is 0
-                    playAudio(pressKeyAud, false);
-    
-                    if(!this.current_para_content[this.para_char_num] && !isSpaceChar(this.current_para_content[this.para_char_num])) this.endGame();
-                    console.log('done space added new word')
-                }
+                // if(para_letters[this.para_char_num]) { // if exists {check last char}
+                //     if(hasClass(para_letters[this.para_char_num], 'error')) { // if char last is error then {delete the new space}
+                //         e.target.value = e.target.value.slice(0, input_char_index - 1); // stop add new char for {input type}
+                //     } else { // else {add the error class then go next}
+                //         letterActive(this.para_char_num, 'error', this);
+                //     }
+                // }
+            } else { // else {the space key is true then continue
+                this.words_done++; // add words done
+                removeClass(para_letters[this.para_char_num], 'letter-active'); // remove active for space char
+                this.para_char_num++; // from space char to first char in new word
+                addClass(para_letters[this.para_char_num], 'letter-active'); // add active for new char
+                Game.activeKeyboardKey(this.para_char_num, this); // add active for new char on keyboard
+                e.target.value = '';
+                this.char_num = input_char_index; // make char_num length is 0
+                playAudio(pressKeyAud, false);
+
+                if(!this.current_para_content[this.para_char_num] && !isSpaceChar(this.current_para_content[this.para_char_num])) this.endGame();
+                console.log('typing method msg: done space added new word')
             }
-            console.log('space')
-        } else if(this.event_key.code == 'Backspace') { // if delete key pressed {go back chars}
-            if(input_char_index < 0) { // if input.value = empty {do nothing}
+        }
+        console.log('space')
+    }
+    backPressed(e, input_char_index, pressKeyAud) {
+        if(input_char_index < 0) { // if input.value = empty {do nothing}
                 if(hasClass(e.target, 'error')) removeClass(e.target, 'error');
                 false;
             } else if(input_char_index == 0) {
@@ -171,40 +177,62 @@ class Game {
                 // play sound
                 playAudio(pressKeyAud, false);
             }
-            console.log('del', this.added_char)
-        } else { // else {that meaning normal key pressed
-            if(e.target.value[input_char_index -1] == this.content[this.words_done][input_char_index -1] && this.content[this.words_done][input_char_index -1].includes(e.target.value[input_char_index -1])) { // if value[inputCharIndex] == content[wordIndex][inputCharIndex]
-                Game.letterActive(this.para_char_num, 'done', this);
-                playAudio(pressKeyAud, false);
-                this.para_char_num++; // then go next
-                if(hasClass(e.target, 'error')) removeClass(e.target, 'error');
-                if(!this.current_para_content[this.para_char_num] && this.current_para_content[this.para_char_num] != '&nbsp') this.endGame();
-            } else { // else {that is meaning this char is not correct}
-                if(para_letters[this.para_char_num - 1]) { // if before last exists>>
-                    if(hasClass(para_letters[this.para_char_num - 1], 'error')) { // if before last has error>>
-                        Game.clickError(null, null, true); //open audio error only
-                        e.target.value = e.target.value.slice(0, input_char_index - 1); // stop add new char for {input type}
-                    } else {
-                        Game.clickError(e.target, 'error');
-                        Game.letterActive(this.para_char_num, 'error', this); // make error on this char
-                        this.para_char_num++; // then go next
-                    }
-                } else { // else {go next whatever}
+            console.log('typing method msg: del', this.added_char)
+    }
+    normalPressed(e, input_char_index, pressKeyAud) {
+        if(e.target.value[input_char_index -1] == this.content[this.words_done][input_char_index -1] && this.content[this.words_done][input_char_index -1].includes(e.target.value[input_char_index -1])) { // if value[inputCharIndex] == content[wordIndex][inputCharIndex]
+            Game.letterActive(this.para_char_num, 'done', this);
+            playAudio(pressKeyAud, false);
+            this.para_char_num++; // then go next
+            if(hasClass(e.target, 'error')) removeClass(e.target, 'error');
+            if(!this.current_para_content[this.para_char_num] && this.current_para_content[this.para_char_num] != '&nbsp') this.endGame();
+        } else { // else {that is meaning this char is not correct}
+            if(para_letters[this.para_char_num - 1]) { // if before last exists>>
+                if(hasClass(para_letters[this.para_char_num - 1], 'error')) { // if before last has error>>
+                    Game.clickError(null, null, true); //open audio error only
+                    e.target.value = e.target.value.slice(0, input_char_index - 1); // stop add new char for {input type}
+                } else {
                     Game.clickError(e.target, 'error');
                     Game.letterActive(this.para_char_num, 'error', this); // make error on this char
                     this.para_char_num++; // then go next
                 }
+            } else { // else {go next whatever}
+                Game.clickError(e.target, 'error');
+                Game.letterActive(this.para_char_num, 'error', this); // make error on this char
+                this.para_char_num++; // then go next
             }
-            // then whatever go next
-            this.char_num = input_char_index;
-            console.log('normal')
+        }
+        // then whatever go next
+        this.char_num = input_char_index;
+        console.log('typing method msg: normal')
+    }
+    
+    // this process while typing in the game
+    typing(e) {
+        // audio when click
+        const pressKeyAud = new Audio(Game.pass_click);
+    
+        // if this char is first (add start_char) else (remove start_char)
+        this.para_char_num > 0 ? removeClass(para_letters[this.para_char_num], 'start_char') : addClass(para_letters[this.para_char_num], 'start_char');
+    
+        // the default variables when click (then use it)
+        let input_char_index = e.target.value.length;
+        this.added_char = isSpaceChar(e.target.value[input_char_index-1]);
+        
+        // Process this key
+        if(this.event_key.code == 'Space') { // if pressed space
+            this.spacePressed(e, input_char_index, pressKeyAud);
+        } else if(this.event_key.code == 'Backspace') { // if delete key pressed (go back if not first char in a word)
+            this.backPressed(e, input_char_index, pressKeyAud);
+        } else { // else {that meaning normal key pressed
+            this.normalPressed(e, input_char_index, pressKeyAud);
         }
     
     
         console.log(this.para_char_num + ': para_char_num |', this.char_num + ': char_num |', this.words_done + ': words_done |', input_char_index + ': input_char_index;');
     }
 
-    // Activate animations for the paragraph ---------------
+    // --------------- Activate animations for the paragraph ---------------
     // activate the letter in the paragraph
     static letterActive(char_index, char_status, gameObj) {
         if(char_index < 0) return;
@@ -241,10 +269,11 @@ class Game {
         Game.activeKeyboardKey(toChar_index, gameObj);
     }
 
-    // visible keyboard (active animation) functions ---------------
-    static clickError(el = null, className = null, audOnly = false) {
+    // --------------- visible keyboard (active animation) functions ---------------
+    // (play the error audio sound) (if not audio only >> add the class) for error click press
+    static clickError(el, className, audOnly = false) {
         if(!audOnly && el && className) addClass(el, className);
-        let pressKeyAud = new Audio('./assets/sound/err_click.wav');
+        let pressKeyAud = new Audio(Game.err_click);
         playAudio(pressKeyAud, false);
     }
     
@@ -282,25 +311,26 @@ class Game {
     
 }
 
-class UI {
 
+
+class UI {
     constructor() {}
 
     static changeGameTime(timeout = 140) {
-        gameTimeNow.innerText = timeout;
+        gameLiveTime.innerText = timeout;
     }
 
     static addParagraph(gameObj) {
         // empty paragraph interface >>> then >>>
-        textBackWriter.innerHTML = '';
+        paraContainerEle.innerHTML = '';
 
         // the first char added
-        textBackWriter.innerHTML += `<span class="letter letter-active start_char" data-char="${gameObj.current_para_content[0]}">${gameObj.current_para_content[0]}</span>`;
+        paraContainerEle.innerHTML += `<span class="letter letter-active start_char" data-char="${gameObj.current_para_content[0]}">${gameObj.current_para_content[0]}</span>`;
         Game.activeKeyboardKey(0, gameObj);
 
         // iterate for all chars
         for(let i = 1; i < gameObj.current_para_content.length; i++) {
-            textBackWriter.innerHTML += `<span class="letter" data-char="${gameObj.current_para_content[i]}">${gameObj.current_para_content[i]}</span>`;
+            paraContainerEle.innerHTML += `<span class="letter" data-char="${gameObj.current_para_content[i]}">${gameObj.current_para_content[i]}</span>`;
         }
     }
 
@@ -310,9 +340,9 @@ class UI {
     }
 
     static defaultGameInfo() {
-        inputUser.value = '';
-        textBackWriter.innerHTML = '';
-        if(hasClass(inputUser, 'error')) removeClass(inputUser, 'error');
+        typeInput.value = '';
+        paraContainerEle.innerHTML = '';
+        if(hasClass(typeInput, 'error')) removeClass(typeInput, 'error');
     }
 
     static showBoard(board) {

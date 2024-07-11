@@ -13,8 +13,11 @@
     padding: 1rem;
     z-index: 20;
 
-    .back {
+    .para_container {
         white-space: 5px;
+        overflow-y: auto;
+        height: 100px;
+        
         .letter {
             color: rgb(104 104 104 / 95%);
             font-size: 25px;
@@ -82,7 +85,7 @@
         }
     }
 
-    .front-user {
+    #userInput {
         display: block;
         @include font-custom(25px, 600);
         color: black;

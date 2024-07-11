@@ -105,10 +105,12 @@
   padding: 1rem;
   z-index: 20;
 }
-.writerBox .back {
+.writerBox .para_container {
   white-space: 5px;
+  overflow-y: auto;
+  height: 100px;
 }
-.writerBox .back .letter {
+.writerBox .para_container .letter {
   color: rgba(104, 104, 104, 0.95);
   font-size: 25px;
   margin-right: 1px;
@@ -117,20 +119,20 @@
   padding-left: 1px;
   position: relative;
 }
-.writerBox .back .letter.error {
+.writerBox .para_container .letter.error {
   background: rgba(255, 0, 0, 0.57);
   color: rgba(108, 0, 0, 0.95);
   border-radius: 4px;
 }
-.writerBox .back .letter.done {
+.writerBox .para_container .letter.done {
   background: rgba(64, 255, 0, 0.57);
   color: rgba(15, 58, 0, 0.95);
   border-radius: 4px;
 }
-.writerBox .back .letter.letter-active {
+.writerBox .para_container .letter.letter-active {
   color: rgba(25, 177, 243, 0.9);
 }
-.writerBox .back .letter.letter-active::before {
+.writerBox .para_container .letter.letter-active::before {
   content: "";
   width: 112%;
   height: 2px;
@@ -140,7 +142,7 @@
   top: 99%;
   animation: hideShow 1.5s ease-out infinite;
 }
-.writerBox .back .letter.start_char::after {
+.writerBox .para_container .letter.start_char::after {
   content: "Start here";
   position: absolute;
   left: -50%;
@@ -161,7 +163,7 @@
   opacity: 1;
   transition: all 0.3s;
 }
-.writerBox .back .letter::after {
+.writerBox .para_container .letter::after {
   opacity: 0;
 }
 @keyframes hideShow {
@@ -178,7 +180,7 @@
     opacity: 0;
   }
 }
-.writerBox .front-user {
+.writerBox #userInput {
   display: block;
   font-size: 25px;
   font-weight: 600;
@@ -191,7 +193,7 @@
   height: -moz-max-content;
   height: max-content;
 }
-.writerBox .front-user.error {
+.writerBox #userInput.error {
   background-color: rgba(251, 26, 26, 0.65);
 }
 .writerBox .game_time {
