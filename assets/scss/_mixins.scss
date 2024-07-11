@@ -82,11 +82,11 @@
 }
 
 // font & options
-@mixin font-custom($fs: initial, $fw: initial, $fa: initial, $fy: initial) {
+@mixin font-custom($fs: initial, $fw: initial, $fy: initial, $ff: initial) {
     font-size: $fs;
     font-weight: $fw;
-    font-family: $fa;
     font-style: $fy;
+    font-family: $ff;
 }
 
 //border radius & options

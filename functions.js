@@ -32,7 +32,6 @@ function pauseEle(ele) {
 }
 
 
-
 function isSpaceChar(str) {
     return / [^ ]*$/.test(str);
 }

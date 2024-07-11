@@ -25,6 +25,8 @@ paraContainerEle = document.querySelector('.game_box .writerBox .para_container'
 typeInput = document.querySelector('.game_box .writerBox #userInput'),
 // Game Info
 gameLiveTime = document.querySelector('.game_box .writerBox .game_time'),
+wpmLiveTime = document.getElementById('wpmLive'),
+accLiveTime = document.getElementById('accuracyLive'),
 
 // ------- keyboard vars -------
 all_keyboard_keys = document.querySelectorAll('.keyboard .keyboard-row .keyboard-key.key');
@@ -39,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async ()=>{
     fetchData('./assets/data/context.json')
     .then(paragraphs => {
         // when click let's begin the game
-        btnStart.onclick = () => start(paragraphs, 15);
+        btnStart.onclick = () => start(paragraphs, 150);
 
     }).catch(error => console.error('Error fetching JSON: ', error));
 })

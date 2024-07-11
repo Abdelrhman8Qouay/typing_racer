@@ -2,6 +2,10 @@
 // .changerContainer {
 
 // }
+.game_box {
+    background: var(--main);
+    padding: 1.4rem;
+}
 
 /* Writer Box Start */
 .writerBox {
@@ -9,100 +13,119 @@
     @include wh-custom(100%, max-content);
     @include rounded;
     user-select: none;
-    background: rgb(30 30 30);
     padding: 1rem;
     z-index: 20;
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    
+    .left {
+        padding: 1.2rem;
+        width: 70%;
+        .para_container {
+            white-space: break-spaces;
+            overflow: auto;
+            height: max-content;
 
-    .para_container {
-        white-space: 5px;
-        overflow-y: auto;
-        height: 100px;
-        
-        .letter {
-            color: rgb(104 104 104 / 95%);
-            font-size: 25px;
-            @include margin-custom-lr(1px, 1px);
-            @include padding-custom-lr(1px, 1px);
-            position: relative;
-            &.error {
-                background: rgba(255, 0, 0, 0.57);
-                color: rgba(108, 0, 0, 0.95);
-                @include rounded;
-            }
-            &.done {
-                background: rgb(64 255 0 / 57%);
-                color: rgba(15, 58, 0, 0.95);
-                @include rounded;
-            }
-            &.letter-active {
-                color: rgba(25, 177, 243, 0.9);
-                &::before {
-                    content: '';
-                    @include wh-custom(112%, 2px);
-                    background: rgba(25, 177, 243, 0.9);
-                    position: absolute;
-                    left: -12%;
-                    top: 99%;
-                    animation: hideShow 1.5s ease-out infinite;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            
+            .letter {
+                color: rgb(104 104 104 / 95%);
+                font-size: 25px;
+                @include margin-custom-lr(1px, 1px);
+                @include padding-custom-lr(1px, 1px);
+                position: relative;
+                &.error {
+                    background: rgba(255, 0, 0, 0.57);
+                    color: rgba(108, 0, 0, 0.95);
+                    @include rounded;
                 }
-            }
-
-            &.start_char {
+                &.done {
+                    background: rgb(64 255 0 / 57%);
+                    color: rgba(15, 58, 0, 0.95);
+                    @include rounded;
+                }
+                &.letter-active {
+                    color: rgba(25, 177, 243, 0.9);
+                    &::before {
+                        content: '';
+                        @include wh-custom(112%, 2px);
+                        background: rgba(25, 177, 243, 0.9);
+                        position: absolute;
+                        left: -12%;
+                        top: 99%;
+                        animation: hideShow 1.5s ease-out infinite;
+                    }
+                }
+    
+                &.start_char {
+                    &::after {
+                        content: 'Start here';
+                        position: absolute;
+                        left: -50%;
+                        bottom: 100%;
+                        background: dimgrey;
+                        color: #fff;
+                        padding: 7px;
+                        @include wh-custom(max-content, max-content);
+                        @include rounded-lg;
+                        font-family: sans-serif;
+                        @include font-custom(14px, 400);
+    
+                        opacity: 1;
+                        transition: all 0.3s;
+                    }
+                }
                 &::after {
-                    content: 'Start here';
-                    position: absolute;
-                    left: -50%;
-                    bottom: 100%;
-                    background: dimgrey;
-                    color: #fff;
-                    padding: 7px;
-                    @include wh-custom(max-content, max-content);
-                    @include rounded-lg;
-                    font-family: sans-serif;
-                    @include font-custom(14px, 400);
-
-                    opacity: 1;
-                    transition: all 0.3s;
+                    opacity: 0;
                 }
             }
-            &::after {
+        }
+        @keyframes hideShow {
+            0% {
+                opacity: 0;
+            }
+            40% {
+                opacity: 1;
+            }
+            60% {
+                opacity: 1;
+            }
+            100% {
                 opacity: 0;
             }
         }
-    }
-    @keyframes hideShow {
-        0% {
-            opacity: 0;
+    
+        #userInput {
+            display: block;
+            @include font-custom(25px, 600);
+            color: black;
+            margin-top: 2rem;
+            padding: 0.5rem 1rem;
+            @include wh-custom(100%, max-content);
+    
+            &.error {
+                background-color: rgba(251, 26, 26, 0.65);
+            }
         }
-        40% {
-            opacity: 1;
-        }
-        60% {
-            opacity: 1;
-        }
-        100% {
-            opacity: 0;
-        }
-    }
-
-    #userInput {
-        display: block;
-        @include font-custom(25px, 600);
-        color: black;
-        margin-top: 2rem;
-        padding: 0.5rem 1rem;
-        @include wh-custom(100%, max-content);
-
-        &.error {
-            background-color: rgba(251, 26, 26, 0.65);
+    
+        .game_time {
+            text-align: end;
+            font-size: 16px;
+            font-weight: 400;
+            color: #fff;
         }
     }
 
-    .game_time {
-        text-align: end;
-        font-size: 16px;
-        font-weight: 400;
-        color: #fff;
+    .right {
+        width: 30%;
+        .box {
+            color: var(--secondary);
+            @include font-custom(25px, 600);
+            @include flex-center-col;
+        }
     }
 }
 /* Writer Box End */
