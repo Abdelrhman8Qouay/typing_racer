@@ -5,8 +5,10 @@ class Game {
     // options to control the shape of the game
     static pass_click = './assets/sound/click.mp3';
     static err_click = './assets/sound/err_click.wav';
+    static #total_times_played = 0;
 
-    constructor(paragraphs, timeout = 140, ) {
+    constructor(paragraphs, timeout = 140) {
+        Game.#total_times_played++;
         this.paras = paragraphs;
         this.const_time = timeout;
         this.game_timeout = timeout;
@@ -19,8 +21,8 @@ class Game {
         this.content = this.current_para.para.split(' '); // split all context to words separate by (space)
         this.char_num = 0; // the character number [index]
         this.para_char_num = 0; // the total character numbers of paragraph as [index] {access on all chars in para}
+        this.correct_chars = 0; // correct characters typed
         this.words_done = 0; // number of words done correctly
-
 
         this.event_key = {code: '' /*Example: KeyE or KeyE the same */, key: '' /*Example: e or E */};
         this.added_char = true;
@@ -44,7 +46,7 @@ class Game {
         }, 1000);
     }
 
-    // return the time spent as seconds
+    // return the time spent as seconds (with timeout of the game)
     #calcTimeSpent() {
         return this.const_time - this.game_timeout; // total seconds of game - at game time done
     }
@@ -55,6 +57,11 @@ class Game {
 
         this.wpm= Math.round(words / time_to_minute); // words per minute // Math.round( wordsWrote / minutesTimeout )
         return this.wpm;
+    }
+    // accuracy calculation (return the percentage of the user typing accuracy)
+    #accCalc() {
+        let accuracy = (this.correct_chars / this.para_char_num) * 100;// (correctCharactersTyped / totalCharactersTyped) * 100;
+        return Math.floor(accuracy) + '%';
     }
 
     // start the game after create the class
@@ -95,6 +102,7 @@ class Game {
         // put the result of the last game
         gameTimeEle.innerText = this.#calcTimeSpent();
         wpmEle.innerText = this.#wpmCalc(); 
+        accuracyEle.innerText = this.#accCalc();
         wordsEle.innerText = this.words_done;
         charsEle.innerText = this.para_char_num;
         
@@ -116,29 +124,28 @@ class Game {
         UI.defaultGameInfo();
     }
 
-    // get the activated key as info(code >> 32, key >> KeyQ)
+    // get the activated key as info(code >> KeyQ, key >> q or Q)
     keyActivated(e) {
         this.event_key.code = e.code; this.event_key.key = e.key;
     }
 
     // ------------------ While Typing ------------------
     spacePressed(e, input_char_index, pressKeyAud) {
-        if(!input_char_index) { // if value empty '' {do nothing
+        if(!input_char_index) { // if input Empty >> stop add new char for {input writer}
             if(hasClass(e.target, 'error')) removeClass(e.target, 'error');
-            e.target.value = e.target.value.slice(0, input_char_index - 1); // stop add new char for {input type}
-            console.log('typing method msg: space for empty input')
-        } else { // else
-            if(e.target.value.trim() != this.content[this.words_done]) { // if input(trim >> removed spaces) != content[textIndex] {then make an error
-                Game.clickError(e.target, null, true);
-                e.target.value = e.target.value.slice(0, input_char_index - 1); // stop add new char for {input type}
+            e.target.value = e.target.value.slice(0, input_char_index - 1); // stop add new char for {input writer}
+        } else { // if input not Empty >>
+            if(e.target.value.trim() != this.content[this.words_done]) { // if input.trim(remove spaces) not= content[wordsIndex] >>>
+                Game.clickError(e.target, null, true); // make error for {input writer}
+                e.target.value = e.target.value.slice(0, input_char_index - 1); // stop add new char for {input writer}
                 // if(para_letters[this.para_char_num]) { // if exists {check last char}
                 //     if(hasClass(para_letters[this.para_char_num], 'error')) { // if char last is error then {delete the new space}
-                //         e.target.value = e.target.value.slice(0, input_char_index - 1); // stop add new char for {input type}
+                //         e.target.value = e.target.value.slice(0, input_char_index - 1); // stop add new char for {input writer}
                 //     } else { // else {add the error class then go next}
                 //         letterActive(this.para_char_num, 'error', this);
                 //     }
                 // }
-            } else { // else {the space key is true then continue
+            } else { // if {input writer} == content[wordsIndex] >>> the space key is true then continue
                 this.words_done++; // add words done
                 removeClass(para_letters[this.para_char_num], 'letter-active'); // remove active for space char
                 this.para_char_num++; // from space char to first char in new word
@@ -148,8 +155,10 @@ class Game {
                 this.char_num = input_char_index; // make char_num length is 0
                 playAudio(pressKeyAud, false);
 
-                if(!this.current_para_content[this.para_char_num] && !isSpaceChar(this.current_para_content[this.para_char_num])) this.endGame();
-                console.log('typing method msg: done space added new word')
+                // if ended the paragraph >> endGame
+                if(!this.current_para_content[this.para_char_num] && !isSpaceChar(this.current_para_content[this.para_char_num])) {
+                    this.endGame();
+                }
             }
         }
         console.log('space')
@@ -180,18 +189,20 @@ class Game {
             console.log('typing method msg: del', this.added_char)
     }
     normalPressed(e, input_char_index, pressKeyAud) {
-        if(e.target.value[input_char_index -1] == this.content[this.words_done][input_char_index -1] && this.content[this.words_done][input_char_index -1].includes(e.target.value[input_char_index -1])) { // if value[inputCharIndex] == content[wordIndex][inputCharIndex]
+        // if input[char] == content[char]
+        if(e.target.value[input_char_index -1] == this.content[this.words_done][input_char_index -1] && this.content[this.words_done][input_char_index -1].includes(e.target.value[input_char_index -1])) {
             Game.letterActive(this.para_char_num, 'done', this);
             playAudio(pressKeyAud, false);
             this.para_char_num++; // then go next
+            this.correct_chars++;
             if(hasClass(e.target, 'error')) removeClass(e.target, 'error');
             if(!this.current_para_content[this.para_char_num] && this.current_para_content[this.para_char_num] != '&nbsp') this.endGame();
         } else { // else {that is meaning this char is not correct}
-            if(para_letters[this.para_char_num - 1]) { // if before last exists>>
-                if(hasClass(para_letters[this.para_char_num - 1], 'error')) { // if before last has error>>
+            if(para_letters[this.para_char_num - 1]) { // if the letter before last exists >> (stop add) or (make error on this char)
+                if(hasClass(para_letters[this.para_char_num - 1], 'error')) { // if before last has error >>> stop add new char for {input type}
                     Game.clickError(null, null, true); //open audio error only
                     e.target.value = e.target.value.slice(0, input_char_index - 1); // stop add new char for {input type}
-                } else {
+                } else { // else >>> make error on this char
                     Game.clickError(e.target, 'error');
                     Game.letterActive(this.para_char_num, 'error', this); // make error on this char
                     this.para_char_num++; // then go next
@@ -227,9 +238,6 @@ class Game {
         } else { // else {that meaning normal key pressed
             this.normalPressed(e, input_char_index, pressKeyAud);
         }
-    
-    
-        console.log(this.para_char_num + ': para_char_num |', this.char_num + ': char_num |', this.words_done + ': words_done |', input_char_index + ': input_char_index;');
     }
 
     // --------------- Activate animations for the paragraph ---------------
