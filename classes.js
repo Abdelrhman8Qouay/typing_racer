@@ -72,9 +72,6 @@ class Game {
     startGame() {
         // first add the paragraph
         UI.addParagraph(this);
-
-        // get the letters as variables
-        para_letters = document.querySelectorAll('.game_box .writerBox .para_container .letter');
     
         // put the background of each para
         changerContainer.style.background = `url(${this.current_para.background}) no-repeat`;
@@ -109,9 +106,8 @@ class Game {
         accuracyEle.innerText = this.#accCalc() + '%';
         wordsEle.innerText = this.words_done;
         charsEle.innerText = this.total_chars_typed;
-        console.log("correct chars: "+ this.correct_chars)
         
-        gameLiveTime.innerText = this.const_time;
+        console.log("correct chars: "+ this.correct_chars)
 
         // remove gameBox & add boardBox
         UI.showBoard(true);
@@ -126,7 +122,7 @@ class Game {
         pauseEle(backgroundAudio);
     
         // return game as a default again 
-        UI.defaultGameInfo();
+        UI.defaultGameInfo(this);
     }
 
     // get the activated key as info(code >> KeyQ, key >> q or Q)
@@ -275,6 +271,7 @@ class Game {
                 KeyboardI.activeKeyboardKey(char_index + 1, gameObj);
             }
         }
+        UI.scrollToActiveLetter();
     }
 
     // (remove the activation from the current key) (add the activation to the previous key): 1 1 0 >> 1 0 0
@@ -306,7 +303,9 @@ class Game {
 
 // User Interface
 class UI {
-    constructor() {}
+    constructor() {
+        this.Keyboard = new KeyboardI();
+    }
 
     static addParagraph(gameObj) {
         // empty paragraph interface >>> then >>>
@@ -320,19 +319,48 @@ class UI {
         for(let i = 1; i < gameObj.current_para_content.length; i++) {
             paraContainerEle.innerHTML += `<span class="letter" data-char="${gameObj.current_para_content[i]}">${gameObj.current_para_content[i]}</span>`;
         }
+
+        // get the letters as variables
+        para_letters = document.querySelectorAll('.game_box .writerBox .para_container .letter');
     }
 
 
+    // --------------- Input Process ---------------
+    // focus the input
     static focusInput(eleInput) {
         eleInput.focus();
     }
+    // scroll the container to active letter
+    static scrollToActiveLetter() {
+        const activeLetter = paraContainerEle.querySelector('.letter-active');
+        console.log('scroll here')
+        
+        if (activeLetter) {
+            // Calculate the position to scroll to
+            const containerRect = paraContainerEle.getBoundingClientRect();
+            const activeLetterRect = activeLetter.getBoundingClientRect();
+    
+            // Calculate the horizontal scroll position to center the active letter
+            const scrollLeft = activeLetterRect.left - containerRect.left + paraContainerEle.scrollLeft - (containerRect.width / 2) + (activeLetterRect.width / 2);
+            
+            // Smoothly scroll the container to the calculated position
+            paraContainerEle.scrollTo({
+                left: scrollLeft,
+                behavior: 'smooth',
+            });
+        }
+    }
 
-    static defaultGameInfo() {
+    // --------------- More Rest ---------------
+    // return the game information to default again
+    static defaultGameInfo(gameObj) {
         typeInput.value = '';
         paraContainerEle.innerHTML = '';
+        gameLiveTime.innerText = gameObj.const_time;
         if(hasClass(typeInput, 'error')) removeClass(typeInput, 'error');
     }
 
+    // true(appear >> board, hide >> game) false(appear >> game, hide >> board)
     static showBoard(board) {
         if(board) {
             addClass(gameBox, 'hide');
@@ -343,6 +371,7 @@ class UI {
         }
     }
 }
+
 
 
 // Keyboard Interface
@@ -489,8 +518,7 @@ class KeyboardI {
     static activeKeyboardKey(char_index, gameObj) {
         
         // remove the active class from the keys (on keyboard animation)
-        var activeKeyElements = document.querySelectorAll('.keyboard .keyboard-row .keyboard-key.key.is-active');
-        activeKeyElements.forEach(el=> removeClass(el, 'is-active'));
+        KeyboardI.removeActiveKeys();
         
         // get the current key element
         var currKeyElement=
@@ -510,12 +538,25 @@ class KeyboardI {
                 let side = capitalizeFirstChar(currKeyElement.dataset['hand']);
                 var shiftKey = document.querySelector(`.keyboard .keyboard-row .keyboard-key.key[data-char="Shift${side}"]`);
                 addClass(shiftKey, 'is-active');
-                console.log("shift is work");
             }
         }
     }
 
+    // get the key code {1 >> Digit1, ! >> Digit1}
     static getKeyCode(char) {
         return KeyboardI.charToKeyCodeMap[char] || null;
     }
+
+    // get the child that is available or null in {key element}
+    static getKeyChild(keyEle, childIndex = 1) {
+        if(!keyEle) return null;
+        let availableChild = keyEle.children[childIndex] || keyEle.children[1] || keyEle.children[0] || null;
+        return availableChild;
+    }
+
+    static removeActiveKeys() {
+        var activeKeyElements = document.querySelectorAll('.keyboard .keyboard-row .keyboard-key.key.is-active');
+        activeKeyElements.forEach(el=> removeClass(el, 'is-active'));
+    }
+
 }
